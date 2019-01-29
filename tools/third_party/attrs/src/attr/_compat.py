@@ -23,7 +23,7 @@ if PY2:
     # We 'bundle' isclass instead of using inspect as importing inspect is
     # fairly expensive (order of 10-15 ms for a modern machine in 2016)
     def isclass(klass):
-        return isinstance(klass, (type, types.ClassType))
+        return isinstance(klass, type)
 
     # TYPE is used in exceptions, repr(int) is different on Python 2 and 3.
     TYPE = "type"

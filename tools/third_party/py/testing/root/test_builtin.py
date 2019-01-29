@@ -69,8 +69,8 @@ def test_sorted():
             assert l == [1, 3, 2, 4]
 
             def compare(x, y):
-                assert type(x) == str
-                assert type(y) == str
+                assert isinstance(x, str)
+                assert isinstance(y, str)
                 return cmp(x, y)
             data = 'The quick Brown fox Jumped over The lazy Dog'.split()
             s(data, cmp=compare, key=str.lower)

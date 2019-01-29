@@ -204,14 +204,14 @@ class RefTestNode(URLManifestItem):
                    manifest=manifest)
 
     def to_RefTest(self):
-        if type(self) == RefTest:
+        if isinstance(self, RefTest):
             return self
         rv = RefTest.__new__(RefTest)
         rv.__dict__.update(self.__dict__)
         return rv
 
     def to_RefTestNode(self):
-        if type(self) == RefTestNode:
+        if isinstance(self, RefTestNode):
             return self
         rv = RefTestNode.__new__(RefTestNode)
         rv.__dict__.update(self.__dict__)

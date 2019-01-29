@@ -238,13 +238,13 @@ class TestEnum(unittest.TestCase):
                 first = 'bippity'
                 second = 'boppity'
                 third = 'boo'
-            self.assertTrue(type(Ordered.__members__) is OrderedDict)
+            self.assertTrue(isinstance(Ordered.__members__, OrderedDict))
 
         def test_members_is_ordereddict_if_not_ordered(self):
             class Unordered(Enum):
                 this = 'that'
                 these = 'those'
-            self.assertTrue(type(Unordered.__members__) is OrderedDict)
+            self.assertTrue(isinstance(Unordered.__members__, OrderedDict))
 
     if pyver >= 3.0:     # all objects are ordered in Python 2.x
         def test_members_is_always_ordered(self):
@@ -252,7 +252,7 @@ class TestEnum(unittest.TestCase):
                 first = 1
                 second = 2
                 third = 3
-            self.assertTrue(type(AlwaysOrdered.__members__) is OrderedDict)
+            self.assertTrue(isinstance(AlwaysOrdered.__members__, OrderedDict))
 
         def test_comparisons(self):
             def bad_compare():
@@ -298,7 +298,7 @@ class TestEnum(unittest.TestCase):
             self.assertNotEqual(e, i)
             self.assertEqual(e.name, season)
             self.assertTrue(e in Season)
-            self.assertTrue(type(e) is Season)
+            self.assertTrue(isinstance(e, Season))
             self.assertTrue(isinstance(e, Season))
             self.assertEqual(str(e), 'Season.' + season)
             self.assertEqual(
@@ -515,7 +515,7 @@ class TestEnum(unittest.TestCase):
             list(Huh),
             [Huh.name, Huh.value],
             )
-        self.assertTrue(type(Huh.name) is Huh)
+        self.assertTrue(isinstance(Huh.name, Huh))
         self.assertEqual(Huh.name.name, 'name')
         self.assertEqual(Huh.name.value, 1)
 
@@ -588,7 +588,7 @@ class TestEnum(unittest.TestCase):
             self.assertTrue(e in WeekDay)
             self.assertEqual(lst.index(e)+1, i)
             self.assertTrue(0 < e < 8)
-            self.assertTrue(type(e) is WeekDay)
+            self.assertTrue(isinstance(e, WeekDay))
             self.assertTrue(isinstance(e, int))
             self.assertTrue(isinstance(e, Enum))
 
@@ -738,7 +738,7 @@ class TestEnum(unittest.TestCase):
             self.assertNotEqual(e, i)
             self.assertEqual(e.name, month)
             self.assertTrue(e in SummerMonth)
-            self.assertTrue(type(e) is SummerMonth)
+            self.assertTrue(isinstance(e, SummerMonth))
 
     def test_programatic_function_string_with_start(self):
         SummerMonth = Enum('SummerMonth', 'june july august', start=10)
@@ -755,7 +755,7 @@ class TestEnum(unittest.TestCase):
             self.assertNotEqual(e, i)
             self.assertEqual(e.name, month)
             self.assertTrue(e in SummerMonth)
-            self.assertTrue(type(e) is SummerMonth)
+            self.assertTrue(isinstance(e, SummerMonth))
 
     def test_programatic_function_string_list(self):
         SummerMonth = Enum('SummerMonth', ['june', 'july', 'august'])
@@ -773,7 +773,7 @@ class TestEnum(unittest.TestCase):
             self.assertNotEqual(e, i)
             self.assertEqual(e.name, month)
             self.assertTrue(e in SummerMonth)
-            self.assertTrue(type(e) is SummerMonth)
+            self.assertTrue(isinstance(e, SummerMonth))
 
     def test_programatic_function_string_list_with_start(self):
         SummerMonth = Enum('SummerMonth', ['june', 'july', 'august'], start=20)
@@ -790,7 +790,7 @@ class TestEnum(unittest.TestCase):
             self.assertNotEqual(e, i)
             self.assertEqual(e.name, month)
             self.assertTrue(e in SummerMonth)
-            self.assertTrue(type(e) is SummerMonth)
+            self.assertTrue(isinstance(e, SummerMonth))
 
     def test_programatic_function_iterable(self):
         SummerMonth = Enum(
@@ -811,7 +811,7 @@ class TestEnum(unittest.TestCase):
             self.assertNotEqual(e, i)
             self.assertEqual(e.name, month)
             self.assertTrue(e in SummerMonth)
-            self.assertTrue(type(e) is SummerMonth)
+            self.assertTrue(isinstance(e, SummerMonth))
 
     def test_programatic_function_from_dict(self):
         SummerMonth = Enum(
@@ -833,7 +833,7 @@ class TestEnum(unittest.TestCase):
             self.assertNotEqual(e, i)
             self.assertEqual(e.name, month)
             self.assertTrue(e in SummerMonth)
-            self.assertTrue(type(e) is SummerMonth)
+            self.assertTrue(isinstance(e, SummerMonth))
 
     def test_programatic_function_type(self):
         SummerMonth = Enum('SummerMonth', 'june july august', type=int)
@@ -850,7 +850,7 @@ class TestEnum(unittest.TestCase):
             self.assertEqual(e, i)
             self.assertEqual(e.name, month)
             self.assertTrue(e in SummerMonth)
-            self.assertTrue(type(e) is SummerMonth)
+            self.assertTrue(isinstance(e, SummerMonth))
 
     def test_programatic_function_type_with_start(self):
         SummerMonth = Enum('SummerMonth', 'june july august', type=int, start=30)
@@ -866,7 +866,7 @@ class TestEnum(unittest.TestCase):
             self.assertEqual(e, i)
             self.assertEqual(e.name, month)
             self.assertTrue(e in SummerMonth)
-            self.assertTrue(type(e) is SummerMonth)
+            self.assertTrue(isinstance(e, SummerMonth))
 
     def test_programatic_function_type_from_subclass(self):
         SummerMonth = IntEnum('SummerMonth', 'june july august')
@@ -883,7 +883,7 @@ class TestEnum(unittest.TestCase):
             self.assertEqual(e, i)
             self.assertEqual(e.name, month)
             self.assertTrue(e in SummerMonth)
-            self.assertTrue(type(e) is SummerMonth)
+            self.assertTrue(isinstance(e, SummerMonth))
 
     def test_programatic_function_type_from_subclass_with_start(self):
         SummerMonth = IntEnum('SummerMonth', 'june july august', start=40)
@@ -899,7 +899,7 @@ class TestEnum(unittest.TestCase):
             self.assertEqual(e, i)
             self.assertEqual(e.name, month)
             self.assertTrue(e in SummerMonth)
-            self.assertTrue(type(e) is SummerMonth)
+            self.assertTrue(isinstance(e, SummerMonth))
 
     def test_programatic_function_unicode(self):
         SummerMonth = Enum('SummerMonth', unicode('june july august'))
@@ -917,7 +917,7 @@ class TestEnum(unittest.TestCase):
             self.assertNotEqual(e, i)
             self.assertEqual(e.name, month)
             self.assertTrue(e in SummerMonth)
-            self.assertTrue(type(e) is SummerMonth)
+            self.assertTrue(isinstance(e, SummerMonth))
 
     def test_programatic_function_unicode_list(self):
         SummerMonth = Enum('SummerMonth', [unicode('june'), unicode('july'), unicode('august')])
@@ -935,7 +935,7 @@ class TestEnum(unittest.TestCase):
             self.assertNotEqual(e, i)
             self.assertEqual(e.name, month)
             self.assertTrue(e in SummerMonth)
-            self.assertTrue(type(e) is SummerMonth)
+            self.assertTrue(isinstance(e, SummerMonth))
 
     def test_programatic_function_unicode_iterable(self):
         SummerMonth = Enum(
@@ -956,7 +956,7 @@ class TestEnum(unittest.TestCase):
             self.assertNotEqual(e, i)
             self.assertEqual(e.name, month)
             self.assertTrue(e in SummerMonth)
-            self.assertTrue(type(e) is SummerMonth)
+            self.assertTrue(isinstance(e, SummerMonth))
 
     def test_programatic_function_from_unicode_dict(self):
         SummerMonth = Enum(
@@ -978,7 +978,7 @@ class TestEnum(unittest.TestCase):
             self.assertNotEqual(e, i)
             self.assertEqual(e.name, month)
             self.assertTrue(e in SummerMonth)
-            self.assertTrue(type(e) is SummerMonth)
+            self.assertTrue(isinstance(e, SummerMonth))
 
     def test_programatic_function_unicode_type(self):
         SummerMonth = Enum('SummerMonth', unicode('june july august'), type=int)
@@ -995,7 +995,7 @@ class TestEnum(unittest.TestCase):
             self.assertEqual(e, i)
             self.assertEqual(e.name, month)
             self.assertTrue(e in SummerMonth)
-            self.assertTrue(type(e) is SummerMonth)
+            self.assertTrue(isinstance(e, SummerMonth))
 
     def test_programatic_function_unicode_type_from_subclass(self):
         SummerMonth = IntEnum('SummerMonth', unicode('june july august'))
@@ -1012,7 +1012,7 @@ class TestEnum(unittest.TestCase):
             self.assertEqual(e, i)
             self.assertEqual(e.name, month)
             self.assertTrue(e in SummerMonth)
-            self.assertTrue(type(e) is SummerMonth)
+            self.assertTrue(isinstance(e, SummerMonth))
 
     def test_programmatic_function_unicode_class(self):
         if pyver < 3.0:
@@ -1037,7 +1037,7 @@ class TestEnum(unittest.TestCase):
                     self.assertEqual(e.value, i)
                     self.assertEqual(e.name, month)
                     self.assertTrue(e in SummerMonth)
-                    self.assertTrue(type(e) is SummerMonth)
+                    self.assertTrue(isinstance(e, SummerMonth))
 
     def test_subclassing(self):
         if isinstance(Name, Exception):
@@ -1065,7 +1065,7 @@ class TestEnum(unittest.TestCase):
             these = 'those'
             def really(self):
                 return 'no, not %s' % self.value
-        self.assertFalse(type(whatever.really) is whatever)
+        self.assertFalse(isinstance(whatever.really, whatever))
         self.assertEqual(whatever.this.really(), 'no, not that')
 
     def test_wrong_inheritance_order(self):
@@ -1557,7 +1557,7 @@ class TestEnum(unittest.TestCase):
             first = (1, 'for the money')
             second = (2, 'for the show')
             third = (3, 'for the music')
-        self.assertTrue(type(SomeTuple.first) is SomeTuple)
+        self.assertTrue(isinstance(SomeTuple.first, SomeTuple))
         self.assertTrue(isinstance(SomeTuple.second, tuple))
         self.assertEqual(SomeTuple.third, (3, 'for the music'))
         globals()['SomeTuple'] = SomeTuple

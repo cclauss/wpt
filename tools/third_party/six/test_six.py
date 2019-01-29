@@ -66,11 +66,11 @@ def test_class_types():
 
 
 def test_text_type():
-    assert type(six.u("hi")) is six.text_type
+    assert isinstance(six.u("hi"), six.text_type)
 
 
 def test_binary_type():
-    assert type(six.b("hi")) is six.binary_type
+    assert isinstance(six.b("hi"), six.binary_type)
 
 
 def test_MAXSIZE():
@@ -532,7 +532,7 @@ def test_u_escapes():
 
 def test_unichr():
     assert six.u("\u1234") == six.unichr(0x1234)
-    assert type(six.u("\u1234")) is type(six.unichr(0x1234))
+    assert isinstance(six.u("\u1234"), type(six.unichr(0x1234)))
 
 
 def test_int2byte():
@@ -718,19 +718,19 @@ def test_with_metaclass():
         pass
     class X(six.with_metaclass(Meta)):
         pass
-    assert type(X) is Meta
+    assert isinstance(X, Meta)
     assert issubclass(X, object)
     class Base(object):
         pass
     class X(six.with_metaclass(Meta, Base)):
         pass
-    assert type(X) is Meta
+    assert isinstance(X, Meta)
     assert issubclass(X, Base)
     class Base2(object):
         pass
     class X(six.with_metaclass(Meta, Base, Base2)):
         pass
-    assert type(X) is Meta
+    assert isinstance(X, Meta)
     assert issubclass(X, Base)
     assert issubclass(X, Base2)
     assert X.__mro__ == (X, Base, Base2, object)
@@ -740,7 +740,7 @@ def test_with_metaclass():
         pass
     class Y(six.with_metaclass(MetaSub, X)):
         pass
-    assert type(Y) is MetaSub
+    assert isinstance(Y, MetaSub)
     assert Y.__mro__ == (Y, X, object)
 
 
@@ -808,7 +808,7 @@ def test_add_metaclass():
     class X:
         "success"
     X = six.add_metaclass(Meta)(X)
-    assert type(X) is Meta
+    assert isinstance(X, Meta)
     assert issubclass(X, object)
     assert X.__module__ == __name__
     assert X.__doc__ == "success"
@@ -817,14 +817,14 @@ def test_add_metaclass():
     class X(Base):
         pass
     X = six.add_metaclass(Meta)(X)
-    assert type(X) is Meta
+    assert isinstance(X, Meta)
     assert issubclass(X, Base)
     class Base2(object):
         pass
     class X(Base, Base2):
         pass
     X = six.add_metaclass(Meta)(X)
-    assert type(X) is Meta
+    assert isinstance(X, Meta)
     assert issubclass(X, Base)
     assert issubclass(X, Base2)
 
@@ -839,9 +839,9 @@ def test_add_metaclass():
     class X(Base):
         x = "x"
     X = six.add_metaclass(Meta2)(X)
-    assert type(X) is Meta2
+    assert isinstance(X, Meta2)
     assert issubclass(X, Base)
-    assert type(Base) is Meta1
+    assert isinstance(Base, Meta1)
     assert "__dict__" not in vars(X)
     instance = X()
     instance.attr = "test"
@@ -872,7 +872,7 @@ def test_add_metaclass():
     class MySlotsWeakref(object):
         __slots__ = "__weakref__",
     MySlotsWeakref = six.add_metaclass(Meta)(MySlotsWeakref)
-    assert type(MySlotsWeakref) is Meta
+    assert isinstance(MySlotsWeakref, Meta)
 
 
 @py.test.mark.skipif("sys.version_info[:2] < (2, 7) or sys.version_info[:2] in ((3, 0), (3, 1))")

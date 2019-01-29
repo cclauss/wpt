@@ -127,7 +127,7 @@ class TestRaises(object):
 
         # ensure the t instance is not stuck in a cyclic reference
         for o in gc.get_objects():
-            assert type(o) is not T
+            assert not isinstance(o, T)
 
     def test_raises_match(self):
         msg = r"with base \d+"

@@ -34,7 +34,7 @@ def format_exception_only(etype, value):
         isinstance(etype, BaseException)
         or isinstance(etype, types.InstanceType)
         or etype is None
-        or type(etype) is str
+        or isinstance(etype, str)
     ):
         return [_format_final_exc_line(etype, value)]
 

@@ -7,6 +7,7 @@
 
 import os
 import w3ctestlib
+import sys
 os.environ['XML_CATALOG_FILES'] = os.path.join(w3ctestlib.__path__[0], 'catalog/catalog.xml')
 
 ###### File path manipulation ######
@@ -15,7 +16,7 @@ import os.path
 from os.path import sep, pardir
 
 def assetName(path):
-  return intern(os.path.splitext(os.path.basename(path))[0].lower().encode('ascii'))
+  return sys.intern(os.path.splitext(os.path.basename(path))[0].lower().encode('ascii'))
   
 def basepath(path):
   """ Returns the path part of os.path.split.
@@ -83,10 +84,10 @@ def listfiles(path, ext = None):
       Optionally lists only files with a given extension.
   """
   try:
-    _,_,files = os.walk(path).next()
+    _,_,files = next(os.walk(path))
     if (ext):
       files = [fileName for fileName in files if fileName.endswith(ext)]
-  except StopIteration, e:
+  except StopIteration as e:
     files = []
   return files
 
@@ -94,8 +95,8 @@ def listdirs(path):
   """ Returns a list of all subdirectories in a directory.
   """
   try:
-    _,dirs,_ = os.walk(path).next()
-  except StopIteration, e:
+    _,dirs,_ = next(os.walk(path))
+  except StopIteration as e:
     dirs = []
   return dirs
 
@@ -150,7 +151,7 @@ def escapeToNamed(text):
   for c in text:
     if ord(c) > 127:
       escapable.add(c)
-  if type(text) == types.UnicodeType:
+  if isinstance(text, str):
     for c in escapable:
       cLatin = c.encode('Latin-1', 'ignore')
       if (cLatin in entityify):

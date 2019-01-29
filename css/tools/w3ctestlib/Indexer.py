@@ -83,8 +83,8 @@ class Indexer:
     # Load toc data
     self.sections = {}
     for uri, numstr, title in sections:
-      uri = intern(uri.encode('utf-8'))
-      uriKey = intern(self._normalizeScheme(uri))
+      uri = sys.intern(uri.encode('utf-8'))
+      uriKey = sys.intern(self._normalizeScheme(uri))
       numstr = escapeToNamedASCII(numstr)
       title = escapeToNamedASCII(title) if title else None
       self.sections[uriKey] = Section(uri, title, numstr)
@@ -110,12 +110,12 @@ class Indexer:
         data['file'] = '/'.join((group.name, test.relpath)) \
                        if group.name else test.relpath
         if (data['scripttest']):
-            data['flags'].append(intern('script'))
+            data['flags'].append(sys.intern('script'))
         self.alltests.append(data)
         for uri in data['links']:
           uri = self._normalizeScheme(uri)
           uri = uri.replace(self._normalizeScheme(self.suite.draftroot), self._normalizeScheme(self.suite.specroot))
-          if self.sections.has_key(uri):
+          if uri in self.sections:
             testlist = self.sections[uri].tests.append(data)
         for credit in data['credits']:
           self.contributors[credit[0]] = credit[1]
@@ -175,7 +175,7 @@ class Indexer:
 
     # Report errors
     if (self.errors):
-        if type(errorOut) is type(('tmpl','out')):
+        if isinstance(errorOut, type(('tmpl','out'))):
             data['errors'] = errors
             self.__writeTemplate(errorOut[0], data, join(destDir, errorOut[1]))
         else:

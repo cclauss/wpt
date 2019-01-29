@@ -105,7 +105,7 @@ class Keys(object):
     R_DELETE = u"\uE05D"
 
 
-ALL_KEYS = getmembers(Keys, lambda x: type(x) == unicode)
+ALL_KEYS = getmembers(Keys, lambda x: isinstance(x, unicode))
 
 ALL_EVENTS = {
     "ADD": {

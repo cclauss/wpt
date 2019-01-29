@@ -527,7 +527,7 @@ class Parser(object):
         return self.tree.node
 
     def consume(self):
-        self.token = self.token_generator.next()
+        self.token = next(self.token_generator)
 
     def expect(self, type, value=None):
         if self.token[0] != type:

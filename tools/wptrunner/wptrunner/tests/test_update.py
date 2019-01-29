@@ -408,7 +408,7 @@ def test_update_assertion_count_1():
 
     assert not new_manifest.is_empty
     assert new_manifest.get_test(test_id).get("max-asserts") == 4
-    assert new_manifest.get_test(test_id).has_key("min-asserts") is False
+    assert ("min-asserts" in new_manifest.get_test(test_id)) is False
 
 
 def test_update_assertion_count_2():
@@ -490,7 +490,7 @@ def test_update_assertion_count_4():
 
     assert not new_manifest.is_empty
     assert new_manifest.get_test(test_id).get("max-asserts") == "8"
-    assert new_manifest.get_test(test_id).has_key("min-asserts") is False
+    assert ("min-asserts" in new_manifest.get_test(test_id)) is False
 
 
 def test_update_lsan_0():
@@ -700,4 +700,4 @@ leak-total: 110""")]
     new_manifest = updated[0][1]
 
     assert not new_manifest.is_empty
-    assert new_manifest.has_key("leak-threshold") is False
+    assert ("leak-threshold" in new_manifest) is False

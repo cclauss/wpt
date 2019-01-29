@@ -1406,7 +1406,7 @@ class NumericRangeTests(TestCase):
             actual = list(mi.numeric_range(*args))
             self.assertEqual(actual, expected)
             self.assertTrue(
-                all(type(a) == type(e) for a, e in zip(actual, expected))
+                all(isinstance(a, type(e)) for a, e in zip(actual, expected))
             )
 
     def test_arg_count(self):

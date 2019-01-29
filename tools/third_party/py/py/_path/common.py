@@ -318,7 +318,7 @@ newline will be removed from the end of each line. """
         """
         current = self
         l = [self]
-        while 1:
+        while True:
             last = current
             current = current.dirpath()
             if last == current:

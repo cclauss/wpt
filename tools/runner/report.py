@@ -12,7 +12,7 @@ import types
 
 
 def html_escape(item, escape_quote=False):
-    if isinstance(item, types.StringTypes):
+    if isinstance(item, (str,)):
         rv = escape(item)
         if escape_quote:
             rv = rv.replace('"', "&quot;")
@@ -76,7 +76,7 @@ def flatten(iterable):
     [1, "abc", "def", 2, [3]]"""
     rv = []
     for item in iterable:
-        if hasattr(item, "__iter__") and not isinstance(item, types.StringTypes):
+        if hasattr(item, "__iter__") and not isinstance(item, (str,)):
             rv.extend(item)
         else:
             rv.append(item)
@@ -216,7 +216,7 @@ def status_cell(status, message=None):
 
 def test_link(test_id, subtest=None):
     """Produce an <a> element linking to a test"""
-    if isinstance(test_id, types.StringTypes):
+    if isinstance(test_id, (str,)):
         rv = [h.a(test_id, href=test_id)]
     else:
         rv = [h.a(test_id[0], href=test_id[0]),

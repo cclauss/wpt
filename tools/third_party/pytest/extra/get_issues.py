@@ -8,7 +8,7 @@ issues_url = "https://api.github.com/repos/pytest-dev/pytest/issues"
 def get_issues():
     issues = []
     url = issues_url
-    while 1:
+    while True:
         get_data = {"state": "all"}
         r = requests.get(url, params=get_data)
         data = r.json()

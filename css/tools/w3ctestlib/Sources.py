@@ -19,6 +19,7 @@ from Utils import getMimeFromExt, escapeToNamedASCII, basepath, isPathInsideBase
 import HTMLSerializer
 import warnings
 import hashlib
+import sys
 
 class SourceTree(object):
   """Class that manages structure of test repository source.
@@ -147,12 +148,12 @@ class SourceTree(object):
   def getAssetType(self, filePath):
     pathList, fileName = self._splitPath(filePath)
     if (self._isReference(pathList, fileName)):
-      return intern('reference')
+      return sys.intern('reference')
     if (self._isTestCase(pathList, fileName)):
-      return intern('testcase')
+      return sys.intern('testcase')
     if (self._isTool(pathList, fileName)):
-      return intern('tool')
-    return intern('support')
+      return sys.intern('tool')
+    return sys.intern('support')
 
 
 class SourceCache:
@@ -172,7 +173,7 @@ class SourceCache:
 
        Cache is bypassed if loading form a change context
     """
-    if ((None == data) and self.__cache.has_key(sourcepath)):
+    if ((None == data) and sourcepath in self.__cache):
       source = self.__cache[sourcepath]
       assert relpath == source.relpath
       return source
@@ -532,7 +533,7 @@ class FileSource:
   def unicode(self):
     try:
       return self.data().decode(self.encoding)
-    except UnicodeDecodeError, e:
+    except UnicodeDecodeError as e:
       return None
 
   def parse(self):
@@ -637,10 +638,10 @@ class FileSource:
     self.validate()
 
     def encode(str):
-        return str if (hasattr(str, 'line')) else intern(str.encode('utf-8'))
+        return str if (hasattr(str, 'line')) else sys.intern(str.encode('utf-8'))
 
     def escape(str, andIntern = True):
-      return str.encode('utf-8') if asUnicode else intern(escapeToNamedASCII(str)) if andIntern else escapeToNamedASCII(str)
+      return str.encode('utf-8') if asUnicode else sys.intern(escapeToNamedASCII(str)) if andIntern else escapeToNamedASCII(str)
 
     def listReferences(source, seen):
         refGroups = []
@@ -811,7 +812,7 @@ class ConfigSource(FileSource):
     return '.htaccess'
 
   def type(self):
-    return intern('support')
+    return sys.intern('support')
 
   def data(self):
     """Merge contents of all config files represented by this source."""
@@ -1396,7 +1397,7 @@ class HTMLSource(XMLSource):
           nodeList.append((element, xlinkns + attr, attr))
 
     for child in element:
-        if (type(child.tag) == type('')): # element node
+        if (isinstance(child.tag, type(''))): # element node
             qName = etree.QName(child.tag)
             if ('foreignobject' != qName.localname.lower()):
                 injected |= self._injectXLinks(child, nodeList)

@@ -370,9 +370,9 @@ class H2Response(Response):
             item = None
             item_iter = self.iter_content()
             try:
-                item = item_iter.next()
+                item = next(item_iter)
                 while True:
-                    check_last = item_iter.next()
+                    check_last = next(item_iter)
                     self.writer.write_data(item, last=False)
                     item = check_last
             except StopIteration:

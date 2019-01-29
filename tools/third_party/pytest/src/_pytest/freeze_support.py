@@ -33,7 +33,7 @@ def _iter_all_modules(package, prefix=""):
     import os
     import pkgutil
 
-    if type(package) is not str:
+    if not isinstance(package, str):
         path, prefix = package.__path__[0], package.__name__ + "."
     else:
         path = package

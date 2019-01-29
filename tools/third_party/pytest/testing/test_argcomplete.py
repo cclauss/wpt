@@ -47,7 +47,7 @@ class FilesCompleter(object):
 
     def __init__(self, allowednames=(), directories=True):
         # Fix if someone passes in a string instead of a list
-        if type(allowednames) is str:
+        if isinstance(allowednames, str):
             allowednames = [allowednames]
 
         self.allowednames = [x.lstrip("*").lstrip(".") for x in allowednames]

@@ -8,6 +8,7 @@ import attr
 from ..deprecated import MARK_PARAMETERSET_UNPACKING, MARK_INFO_ATTRIBUTE
 from ..compat import NOTSET, getfslineno, MappingMixin
 from six.moves import map, reduce
+from functools import reduce
 
 
 EMPTY_PARAMETERSET_OPTION = "empty_parameter_set_mark"

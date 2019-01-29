@@ -206,5 +206,5 @@ def get(error_code):
 
 _errors = collections.defaultdict()
 for item in locals().values():
-    if type(item) == type and issubclass(item, WebDriverException):
+    if isinstance(item, type) and issubclass(item, WebDriverException):
         _errors[item.status_code] = item

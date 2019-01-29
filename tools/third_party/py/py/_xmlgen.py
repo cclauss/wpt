@@ -170,8 +170,7 @@ class SimpleUnicodeVisitor(object):
 
     def attributes(self, tag):
         # serialize attributes
-        attrlist = dir(tag.attr)
-        attrlist.sort()
+        attrlist = sorted(dir(tag.attr))
         l = []
         for name in attrlist:
             res = self.repr_attribute(tag.attr, name)

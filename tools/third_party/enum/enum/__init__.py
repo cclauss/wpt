@@ -155,7 +155,7 @@ class EnumMeta(type):
         # cannot be mixed with other types (int, float, etc.) if it has an
         # inherited __new__ unless a new __new__ is defined (or the resulting
         # class will fail).
-        if type(classdict) is dict:
+        if isinstance(classdict, dict):
             original_dict = classdict
             classdict = _EnumDict()
             for k, v in original_dict.items():
@@ -645,7 +645,7 @@ def __new__(cls, value):
     # all enum instances are actually created during class construction
     # without calling this method; this method is called by the metaclass'
     # __call__ (i.e. Color(3) ), and by pickle
-    if type(value) is cls:
+    if isinstance(value, cls):
         # For lookups like Color(Color.red)
         value = value.value
         #return value
@@ -710,7 +710,7 @@ del __format__
 if pyver < 2.6:
 
     def __cmp__(self, other):
-        if type(other) is self.__class__:
+        if isinstance(other, self.__class__):
             if self is other:
                 return 0
             return -1
@@ -743,14 +743,14 @@ else:
 
 
 def __eq__(self, other):
-    if type(other) is self.__class__:
+    if isinstance(other, self.__class__):
         return self is other
     return NotImplemented
 temp_enum_dict['__eq__'] = __eq__
 del __eq__
 
 def __ne__(self, other):
-    if type(other) is self.__class__:
+    if isinstance(other, self.__class__):
         return self is not other
     return NotImplemented
 temp_enum_dict['__ne__'] = __ne__

@@ -482,7 +482,7 @@ class FixtureRequest(FuncargnamesCompatAttr):
     def _get_fixturestack(self):
         current = self
         values = []
-        while 1:
+        while True:
             fixturedef = getattr(current, "_fixturedef", None)
             if fixturedef is None:
                 values.reverse()

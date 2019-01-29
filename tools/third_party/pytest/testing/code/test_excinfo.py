@@ -1305,7 +1305,7 @@ def test_exception_repr_extraction_error_on_recursion():
     class numpy_like(object):
 
         def __eq__(self, other):
-            if type(other) is numpy_like:
+            if isinstance(other, numpy_like):
                 raise ValueError(
                     "The truth value of an array "
                     "with more than one element is ambiguous."

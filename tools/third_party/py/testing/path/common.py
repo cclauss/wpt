@@ -305,7 +305,7 @@ class CommonFSTests(object):
     def test_load(self, path1):
         p = path1.join('samplepickle')
         obj = p.load()
-        assert type(obj) is dict
+        assert isinstance(obj, dict)
         assert obj.get('answer',None) == 42
 
     def test_visit_filesonly(self, path1):

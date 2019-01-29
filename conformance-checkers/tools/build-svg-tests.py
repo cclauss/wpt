@@ -130,7 +130,7 @@ def build_html_test_file(filename, svgdirectory, htmldirectory):
     svgpathname = svgdirectory + "/" + filename
 
     # valid_svg_file overrides invalid_svg_files (may invalid in case-sensitive XML but valid in case-insensitive HTML)
-    if invalid_svg_files.has_key(filename) and not valid_svg_files.has_key(filename):
+    if filename in invalid_svg_files and filename not in valid_svg_files:
         htmlpathname = htmldirectory + "/" + filename.replace( "-manual.svg", "-novalid.html")
     else:
         htmlpathname = htmldirectory + "/" + filename.replace( "-manual.svg", "-isvalid.html")

@@ -263,7 +263,7 @@ class TestDarkMagic(object):
         """
         Metaclass data is preserved.
         """
-        assert Meta == type(cls)
+        assert isinstance(cls, Meta)
 
     def test_default_decorator(self):
         """

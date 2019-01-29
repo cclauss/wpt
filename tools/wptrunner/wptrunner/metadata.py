@@ -1,3 +1,4 @@
+from __future__ import print_function
 import array
 import os
 import shutil
@@ -13,6 +14,7 @@ import wptmanifest
 import wpttest
 from expected import expected_path
 from vcs import git
+import sys
 manifest = None  # Module that will be imported relative to test_root
 manifestitem = None
 
@@ -49,9 +51,9 @@ def update_expected(test_paths, serve_root, log_file_names,
             for test in updated_ini.iterchildren():
                 for subtest in test.iterchildren():
                     if subtest.new_disabled:
-                        print "disabled: %s" % os.path.dirname(subtest.root.test_path) + "/" + subtest.name
+                        print("disabled: %s" % os.path.dirname(subtest.root.test_path) + "/" + subtest.name)
                     if test.new_disabled:
-                        print "disabled: %s" % test.root.test_path
+                        print("disabled: %s" % test.root.test_path)
 
 
 def do_delayed_imports(serve_root):
@@ -355,11 +357,11 @@ class ExpectedUpdater(object):
         self.run_info = run_info_intern.store(data["run_info"])
 
     def test_start(self, data):
-        test_id = intern(data["test"].encode("utf8"))
+        test_id = sys.intern(data["test"].encode("utf8"))
         try:
             test_data = self.id_test_map[test_id]
         except KeyError:
-            print "Test not found %s, skipping" % test_id
+            print("Test not found %s, skipping" % test_id)
             return
 
         if self.ignore_existing:
@@ -368,8 +370,8 @@ class ExpectedUpdater(object):
         self.tests_visited[test_id] = set()
 
     def test_status(self, data):
-        test_id = intern(data["test"].encode("utf8"))
-        subtest = intern(data["subtest"].encode("utf8"))
+        test_id = sys.intern(data["test"].encode("utf8"))
+        subtest = sys.intern(data["subtest"].encode("utf8"))
         test_data = self.id_test_map.get(test_id)
         if test_data is None:
             return
@@ -386,7 +388,7 @@ class ExpectedUpdater(object):
         if data["status"] == "SKIP":
             return
 
-        test_id = intern(data["test"].encode("utf8"))
+        test_id = sys.intern(data["test"].encode("utf8"))
         test_data = self.id_test_map.get(test_id)
         if test_data is None:
             return
@@ -399,7 +401,7 @@ class ExpectedUpdater(object):
         del self.tests_visited[test_id]
 
     def assertion_count(self, data):
-        test_id = intern(data["test"].encode("utf8"))
+        test_id = sys.intern(data["test"].encode("utf8"))
         test_data = self.id_test_map.get(test_id)
         if test_data is None:
             return
@@ -410,7 +412,7 @@ class ExpectedUpdater(object):
 
     def test_for_scope(self, data):
         dir_path = data.get("scope", "/")
-        dir_id = intern(os.path.join(dir_path, "__dir__").replace(os.path.sep, "/").encode("utf8"))
+        dir_id = sys.intern(os.path.join(dir_path, "__dir__").replace(os.path.sep, "/").encode("utf8"))
         if dir_id.startswith("/"):
             dir_id = dir_id[1:]
         return dir_id, self.id_test_map[dir_id]
@@ -447,13 +449,13 @@ def create_test_tree(metadata_path, test_manifest):
     all_types = manifestitem.item_types.keys()
     include_types = set(all_types) - exclude_types
     for item_type, test_path, tests in test_manifest.itertypes(*include_types):
-        test_file_data = TestFileData(intern(test_manifest.url_base.encode("utf8")),
-                                      intern(item_type.encode("utf8")),
+        test_file_data = TestFileData(sys.intern(test_manifest.url_base.encode("utf8")),
+                                      sys.intern(item_type.encode("utf8")),
                                       metadata_path,
                                       test_path,
                                       tests)
         for test in tests:
-            id_test_map[intern(test.id.encode("utf8"))] = test_file_data
+            id_test_map[sys.intern(test.id.encode("utf8"))] = test_file_data
 
         dir_path = os.path.split(test_path)[0].replace(os.path.sep, "/")
         while True:
@@ -461,9 +463,9 @@ def create_test_tree(metadata_path, test_manifest):
                 dir_id = dir_path + "/__dir__"
             else:
                 dir_id = "__dir__"
-            dir_id = intern((test_manifest.url_base + dir_id).lstrip("/").encode("utf8"))
+            dir_id = sys.intern((test_manifest.url_base + dir_id).lstrip("/").encode("utf8"))
             if dir_id not in id_test_map:
-                test_file_data = TestFileData(intern(test_manifest.url_base.encode("utf8")),
+                test_file_data = TestFileData(sys.intern(test_manifest.url_base.encode("utf8")),
                                               None,
                                               metadata_path,
                                               dir_id,
@@ -532,7 +534,7 @@ class TestFileData(object):
         self.item_type = item_type
         self.test_path = test_path
         self.metadata_path = metadata_path
-        self.tests = {intern(item.id.encode("utf8")) for item in tests}
+        self.tests = {sys.intern(item.id.encode("utf8")) for item in tests}
         self._requires_update = False
         self.clear = set()
         self.data = defaultdict(lambda: defaultdict(PackedResultList))

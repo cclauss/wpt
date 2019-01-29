@@ -1388,7 +1388,7 @@ class _HandshakeDeltaBase(object):
             for key, value in delta.items():
                 # The spec requires that a header with an empty value is
                 # removed from the delta base.
-                if len(value) == 0 and headers.has_key(key):
+                if len(value) == 0 and key in headers:
                     del headers[key]
                 else:
                     headers[key] = value

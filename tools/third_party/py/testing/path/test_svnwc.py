@@ -388,12 +388,12 @@ class TestWCSvnCommandPath(CommonSvnTests):
         testfile = path1.join('test.txt').ensure(file=True)
         testfile.write('test')
         rev = path1.commit('testing')
-        assert type(rev) == int
+        assert isinstance(rev, int)
 
         anotherfile = path1.join('another.txt').ensure(file=True)
         anotherfile.write('test')
         rev2 = path1.commit('testing more')
-        assert type(rev2) == int
+        assert isinstance(rev2, int)
         assert rev2 == rev + 1
 
     #def test_log(self, path1):

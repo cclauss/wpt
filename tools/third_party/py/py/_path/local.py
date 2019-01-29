@@ -231,7 +231,7 @@ class LocalPath(FSBase):
             raise ValueError("Don't know how to compute %r hash" %(hashtype,))
         f = self.open('rb')
         try:
-            while 1:
+            while True:
                 buf = f.read(chunksize)
                 if not buf:
                     return hash.hexdigest()
@@ -975,7 +975,7 @@ def copychunked(src, dest):
     try:
         fdest = dest.open('wb')
         try:
-            while 1:
+            while True:
                 buf = fsrc.read(chunksize)
                 if not buf:
                     break

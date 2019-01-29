@@ -169,7 +169,7 @@ class FrameBuffer(object):
         # frame in the sequence instead. Recurse back into ourselves to do
         # that. This is safe because the amount of work we have to do here is
         # strictly bounded by the length of the buffer.
-        return f if f is not None else self.next()
+        return f if f is not None else next(self)
 
     def __next__(self):  # Python 3
-        return self.next()
+        return next(self)

@@ -19,8 +19,7 @@ attrlist = re.compile(r"^(\s+)\w+=.*(\n\1\w+=.*)+", re.M)
 
 
 def sortattrs(x):
-    lines = x.group(0).split("\n")
-    lines.sort()
+    lines = sorted(x.group(0).split("\n"))
     return "\n".join(lines)
 
 

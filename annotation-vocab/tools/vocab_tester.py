@@ -21,7 +21,7 @@ def fetch(url):
     return data
 
 def load_document_and_cache(url):
-    if docCache.has_key(url):
+    if url in docCache:
         return docCache[url]
 
     doc = {
@@ -79,7 +79,7 @@ class Validator(object):
         for (k,v) in js.items():
             if k == 'id' and v.startswith("_:"):
                 continue
-            elif type(v) == dict:
+            elif isinstance(v, dict):
                 # recurse
                 res = self._clean_bnode_ids(v)
                 new[k] = res
@@ -94,16 +94,16 @@ class Validator(object):
         new = {}
         for (k,v) in js.items():
             if k == 'type':
-                if type(v) == list:
+                if isinstance(v, list):
                     nl = []
                     for i in v:
-                        if self.rdflib_class_map.has_key(i):
+                        if i in self.rdflib_class_map:
                             nl.append(self.rdflib_class_map[i])
                     new['type'] = nl
                 else:
-                    if self.rdflib_class_map.has_key(v):
+                    if v in self.rdflib_class_map:
                         new['type'] = self.rdflib_class_map[v]
-            elif type(v) == dict:
+            elif isinstance(v, dict):
                 # recurse
                 res = self._mk_rdflib_jsonld(v)
                 new[k] = res
@@ -139,7 +139,7 @@ class Validator(object):
     def compact_and_clean(self, js):
         newjs = compact(js, context_js)
         newjs['@context'] = context
-        if newjs.has_key("@graph"):
+        if "@graph" in newjs:
             for k,v in newjs['@graph'].items():
                 newjs[k] = v
             del newjs['@graph']
